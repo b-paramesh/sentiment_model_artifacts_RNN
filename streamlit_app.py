@@ -135,16 +135,7 @@ def preprocess_text(text):
     # Remove punctuation
     text = re.sub(r"[^\w\s]", "", text)
 
-    # Tokenization
-    words = text.split()
-
-    # Remove stopwords
-    filtered_words = [
-        word for word in words
-        if word not in STOP_WORDS
-    ]
-
-    return " ".join(filtered_words)
+    return text
 
 # -------------------------------------------------------
 # Prediction Function
@@ -197,13 +188,13 @@ st.markdown("""
 This AI-powered NLP application analyzes emotional sentiment using a trained Recurrent Neural Network (RNN).
 
 ### Supported Sentiments
-- Positive
-- Negative
-- Neutral
+- Normal
 - Anxiety
 - Depression
 - Stress
 - Suicidal
+- Bipolar
+- Personality disorder
 """)
 
 st.divider()
@@ -260,29 +251,32 @@ if st.button("Analyze Sentiment"):
         # ---------------------------------------------------
         # Emotional Alerts
         # ---------------------------------------------------
-        if sentiment.lower() in [
+        distress_labels = [
             "depression",
             "stress",
             "anxiety",
             "suicidal",
-            "negative"
-        ]:
+            "bipolar",
+            "personality disorder"
+        ]
+
+        if sentiment.lower() in distress_labels:
 
             st.error(
-                "Emotional distress detected. "
+                f"Emotional distress ({sentiment}) detected. "
                 "Please consider seeking support if needed."
             )
 
-        elif sentiment.lower() == "positive":
+        elif sentiment.lower() == "normal":
 
             st.success(
-                "Positive sentiment detected."
+                "Normal/Positive sentiment detected."
             )
 
         else:
 
             st.info(
-                "Neutral sentiment detected."
+                f"{sentiment} sentiment detected."
             )
 
 # -------------------------------------------------------

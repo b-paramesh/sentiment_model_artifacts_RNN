@@ -17,3 +17,4 @@ AI-powered sentiment analysis web app using:
 ```bash
 pip install -r requirements.txt
 streamlit run streamlit_app.py
+```
